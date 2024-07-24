@@ -36,7 +36,7 @@ class DataTransformation:
             num_pipeline = Pipeline (
                 steps= [
                     ("imputer", SimpleImputer(strategy="median")),
-                    ("scaler", StandardScaler)
+                    ("scaler", StandardScaler())
                 ]
             )
 
@@ -51,7 +51,7 @@ class DataTransformation:
             # make the preprocessor
             preprocessor = ColumnTransformer(
                 [
-                    ("numerical_pipeline", num_pipeline, num_col)
+                    ("numerical_pipeline", num_pipeline, num_col),
                     ("categorical_pipeline", cat_pipeline, cat_col)
                 ]
             )
@@ -85,9 +85,12 @@ class DataTransformation:
             input_feature_test = test_df.drop(columns=[target_col], axis = 1)
             target_feature_test = test_df[target_col]
 
+            logging.info("Applying preprocessing object")
+
             input_feature_train_array = preprocessing_obj.fit_transform(input_feature_train)
             input_feature_test_array = preprocessing_obj.transform(input_feature_test)
 
+            logging.info("Converting to array")
             # np.c_[np.array([1,2,3]), np.array([4,5,6])] = array([1,4],[2,5],[3,6])
             train_array = np.c_[input_feature_train_array, np.array(target_feature_train)]
             test_array = np.c_[input_feature_test_array, np.array(target_feature_test)]
