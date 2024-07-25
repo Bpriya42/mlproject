@@ -67,5 +67,5 @@ class ModelTraining:
             r2_square = r2_score(y_test, prediction)
             return r2_square
 
-        except:
-            pass
+        except Exception as e:
+            raise CustomException(e,sys)
