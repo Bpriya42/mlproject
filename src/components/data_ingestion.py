@@ -27,11 +27,14 @@ class DataIngestion:
             try:
                 df = pd.read_csv('notebook\datasets\StudentsPerformance.csv')
                 logging.info("Dataset is read as dataframe")
+                df = df.rename(columns=({'race/ethnicity' : 'race_ethnicity','parental level of education': 'parental_level_of_education','test preparation course': 'test_preparation_course', 'math score':'math_score', 'reading score':'reading_score', 'writing score':'writing_score'}))
 
                 # make the directories required 
                 os.makedirs(os.path.dirname( self.ingestion_config.train_data_path), exist_ok=True)
 
+                df.rename(columns={'math score': 'math_score'})
                 df.to_csv(self.ingestion_config.raw_data_path, index = False, header = True)
+                
 
                 logging.info("Train Test split initiated")
                 train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)

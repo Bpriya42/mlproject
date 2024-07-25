@@ -10,7 +10,7 @@ from src.logger import logging
 from sklearn.metrics import r2_score
 
 def save_object(file_path, obj):
-
+    '''Function to create a pkl file with object'''
     try:
         dir_path = os.path.dirname(file_path)
         os.makedirs(dir_path, exist_ok= True)
@@ -21,8 +21,18 @@ def save_object(file_path, obj):
     except Exception as e:
         raise CustomException( e, sys)
     
+def load_object(filepath):
+    '''Function to load and return created pkl file'''
+    try:
+        with open(filepath, "rb") as file_obj:
+            print("loading pkl file")
+            return pickle.load(file_obj)
+        
+    except Exception as e:
+        raise CustomException(e,sys)
+    
 def evaluate_models(X_train, y_train, X_test, y_test, models):
-
+    '''Function to evaluate the model based on input data'''
     try:
         model_list = {}
 

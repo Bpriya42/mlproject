@@ -28,9 +28,9 @@ class DataTransformation:
         '''
         try:
             # Separate the features into numerical and categorical columns
-            num_col = ["math score", "writing score"]
+            num_col = ["math_score", "writing_score"]
 
-            cat_col = ["gender","race/ethnicity","parental level of education","lunch","test preparation course"]
+            cat_col = ["gender","race_ethnicity","parental_level_of_education","lunch","test_preparation_course"]
 
             # make two pipelines, one for numerical and one for categorical
             num_pipeline = Pipeline (
@@ -75,8 +75,8 @@ class DataTransformation:
             logging.info("Obtain the preprocessing object")
             preprocessing_obj = self.get_data_transformer_object()
 
-            target_col = "reading score"
-            numerical_col = ["math score", "writing score"]
+            target_col = "reading_score"
+            numerical_col = ["math_score", "writing_score"]
 
             logging.info("Assign the input and target data for train and test")
             input_feature_train = train_df.drop(columns=[target_col], axis = 1)

@@ -3,6 +3,7 @@ import os
 import pandas as pd
 
 from src.exception import CustomException
+from src.utils import load_object
 
 class PredictPipeline:
     def __init__(self):
@@ -12,16 +13,23 @@ class PredictPipeline:
 
         try:
             # we get the model and preprocessor and make the prediction
+            print(features)
             model_path = os.path.join("artifacts", "model.pkl")
             preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
 
-            # load both pkl files 
+            print("load both pkl files") 
+            preprocessor_obj = load_object(preprocessor_path)
+            model_obj = load_object(model_path)
 
-            # scale the data using preprocessor
+            print("scale the data using preprocessor")
+            print(type(preprocessor_obj))
+            scaled_data = preprocessor_obj.transform(features) 
 
-            # predict using model and preprocessed data
+            print("predict using model and preprocessed data")
+            predicted = model_obj.predict(scaled_data)
 
-            # return preducted data
+            print("return predicted data")
+            return predicted
 
         except Exception as e:
             raise CustomException(e,sys)
